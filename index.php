@@ -34,7 +34,7 @@ if (!file_exists("tmp") || !is_dir("tmp")) {
 
 
 // use redirect url
-$url = @$_SERVER['REDIRECT_URL'];
+$url = @$_SERVER['REDIRECT_URL'] ? $_SERVER['REDIRECT_URL'] : $_SERVER['REQUEST_URI'];
 $parameters = getParameters($url);
 
 // look for requested file
@@ -76,7 +76,7 @@ if ($logging) {
   $logFile = "tmp/log.txt";
   
   $logFileContent = @file_get_contents($logFile);
-  $logFileContent .= $_SERVER['REDIRECT_URL']."\n";
+  $logFileContent .= $url."\n";
   file_put_contents($logFile, $logFileContent);
 }  
   // write filesize to header so we get a download percentage
